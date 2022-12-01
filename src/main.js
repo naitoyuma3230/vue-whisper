@@ -10,9 +10,9 @@ import {
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-import firebase from "firebase";
-import { initializeApp } from "firebase/app"; // firebase/appモジュールをインポート
-import { getFirestore, collection, getDocs } from "firebase/firestore/lite"; // firestoreをインポート
+import { initializeApp } from "@firebase/app";
+import { getFirestore } from "firebase/firestore";
+
 Vue.config.productionTip = false;
 Vue.component("fa", FontAwesomeIcon);
 library.add(faUser, faSignOutAlt, faEllipsisV);
@@ -20,13 +20,17 @@ library.add(faUser, faSignOutAlt, faEllipsisV);
 const firebaseConfig = {
 	apiKey: "AIzaSyAVbaMi0wv2PwszFHx0I8BNitiYXHydjyo",
 	authDomain: "vue-whisper.firebaseapp.com",
+	databaseURL: "https://vue-whisper-default-rtdb.firebaseio.com",
 	projectId: "vue-whisper",
 	storageBucket: "vue-whisper.appspot.com",
 	messagingSenderId: "161235616759",
 	appId: "1:161235616759:web:9b040367f7f7554650a4f2",
+	measurementId: "G-P8MXM0ZSGE",
 };
 
-firebase.initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+
+export const db = getFirestore(app);
 
 new Vue({
 	router,
