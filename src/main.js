@@ -18,14 +18,14 @@ Vue.component("fa", FontAwesomeIcon);
 library.add(faUser, faSignOutAlt, faEllipsisV);
 
 const firebaseConfig = {
-	apiKey: "AIzaSyAVbaMi0wv2PwszFHx0I8BNitiYXHydjyo",
-	authDomain: "vue-whisper.firebaseapp.com",
-	databaseURL: "https://vue-whisper-default-rtdb.firebaseio.com",
-	projectId: "vue-whisper",
-	storageBucket: "vue-whisper.appspot.com",
-	messagingSenderId: "161235616759",
-	appId: "1:161235616759:web:9b040367f7f7554650a4f2",
-	measurementId: "G-P8MXM0ZSGE",
+	apiKey: process.env.VUE_APP_FIREBASE_APIKEY,
+	authDomain: process.env.VUE_APP_FIREBASE_AUTH_DOMAIN,
+	databaseURL: process.env.VUE_APP_FIREBASE_DATABASE_URL,
+	projectId: process.env.VUE_APP_FIREBASE_PROJECT_ID,
+	storageBucket: process.env.VUE_APP_FIREBASE_STORAGE_BUCKET,
+	messagingSenderId: process.env.VUE_APP_FIREBASE_MESSAGING_SENDER_ID,
+	appId: process.env.VUE_APP_FIREBASE_APP_ID,
+	measurementId: process.env.VUE_APP_FIREBASE_MEASUREMENT_UD,
 };
 
 const app = initializeApp(firebaseConfig);
