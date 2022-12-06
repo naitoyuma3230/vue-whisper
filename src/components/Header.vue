@@ -3,13 +3,77 @@
     <router-link to="/">
       <h1>whisp.</h1>
     </router-link>
-    <div class="btns">
+    <div v-if="currentUser" class="btns">
+      <router-link :to="`/user/${currentUser.uid}`">
+        <button :style="`background-image: url(${currentUser.photoURL})`"></button>
+      </router-link>
+      <button @click="signOut">
+        <fa icon="sign-out-alt" />
+      </button>
+    </div>
+    <div v-else class="btns">
       <button>
-        <fa icon="user" />
+        <fa icon="user" @click="signIn" />
       </button>
     </div>
   </header>
 </template>
+<script>
+import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { db } from '../main'
+import { addDoc, collection, doc } from "firebase/firestore"; 
+export default {
+  methods:{
+    async signIn () {
+      const provider = new GoogleAuthProvider()
+      const auth = getAuth()
+      await signInWithPopup(auth, provider)
+        .then((result) => {
+          this.createUser(result.user)
+          alert(`HELLO ${result.user.displayName}`)
+          this.$router.push(`/user/${result.user.uid}`)
+        }).catch((error) => {
+          console.error(error)
+        })
+    },
+    signOut () {
+      const auth = getAuth()
+      if (window.confirm('Are You Sure to Sign Out?')) {
+        auth.signOut()
+        .then(() => {
+          alert('You Safely Signed Out.')
+          this.$router.push("/")
+        })
+      }
+    },
+    async createUser (user) {
+      try {
+        const docRef = doc(db, "users")
+        const data = {
+          'name': user.displayName,
+          'photoURL': user.photoURL,
+          'email':user.email,
+          'uid':user.uid
+        };
+        await setDoc(docRef, data)
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      }
+    },
+  },
+  data () {
+    return {
+      currentUser: "" 
+    }
+  },
+  created () {
+    const auth = getAuth();
+    auth.onAuthStateChanged(user => {
+      this.currentUser = user
+    })
+  },
+}
+</script>
 <style lang="stylus" scoped>
 header
   position fixed
