@@ -1,7 +1,7 @@
 <template>
   <div id="user">
     <div class="user-title">
-      <div class="avatar" :style="`background-image: url('${user.photoURL}')`"></div>
+      <div class="avatar" :style="`background-image: url(${user.photoURL})`"></div>
       <div class="texts">
         <h1>{{user.name}}</h1>
         <p v-if="myWhispers.length > 1">{{myWhispers.length}} whispers</p>

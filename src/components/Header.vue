@@ -21,7 +21,7 @@
 <script>
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { db } from '../main'
-import { addDoc, collection,setDoc, doc } from "firebase/firestore"; 
+import { addDoc, collection, query, getDocs, where, setDoc, doc } from "firebase/firestore"; 
 export default {
   methods:{
     async signIn () {
@@ -30,7 +30,6 @@ export default {
       await signInWithPopup(auth, provider)
         .then((result) => {
           this.createUser(result.user)
-          alert(`HELLO ${result.user.displayName}`)
           this.$router.push(`/user/${result.user.uid}`)
         }).catch((error) => {
           console.error(error)
@@ -42,20 +41,21 @@ export default {
         auth.signOut()
         .then(() => {
           alert('You Safely Signed Out.')
-          this.$router.push("/")
+          if(this.$route.name !== "/") this.$router.push("/")
         })
       }
     },
     async createUser (user) {
       try {
-        const docRef = doc(collection(db, "users"))
-        const data = {
-          'name': user.displayName,
-          'photoURL': user.photoURL,
-          'email':user.email,
-          'uid':user.uid
-        };
-        await setDoc(docRef, data)
+        // userはidをuidに指定
+          const docRef = doc(db, "users",user.uid)
+          const data = {
+            'name': user.displayName,
+            'photoURL': user.photoURL,
+            'email':user.email,
+            'uid':user.uid
+          };
+          await setDoc(docRef, data)
       } catch (e) {
         console.error("Error adding document: ", e);
       }
