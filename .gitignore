@@ -22,5 +22,4 @@ pnpm-debug.log*
 *.sw?
 node_modules
 
-# firebase
-.firebase/
+.firebase
