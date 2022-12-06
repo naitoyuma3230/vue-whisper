@@ -21,7 +21,7 @@
 <script>
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { db } from '../main'
-import { addDoc, collection, doc } from "firebase/firestore"; 
+import { addDoc, collection,setDoc, doc } from "firebase/firestore"; 
 export default {
   methods:{
     async signIn () {
@@ -48,7 +48,7 @@ export default {
     },
     async createUser (user) {
       try {
-        const docRef = doc(db, "users")
+        const docRef = doc(collection(db, "users"))
         const data = {
           'name': user.displayName,
           'photoURL': user.photoURL,
