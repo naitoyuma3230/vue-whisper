@@ -92,4 +92,8 @@ header
     cursor pointer
     img
       width 100%
+    button
+      display: flex
+      justify-content: center
+      align-items: center
 </style>
