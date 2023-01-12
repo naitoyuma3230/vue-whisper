@@ -1,7 +1,7 @@
 <template>
   <header>
     <router-link to="/">
-      <h1>whisp.</h1>
+      <img src="@/assets/logo.png"/>
     </router-link>
     <div v-if="currentUser" class="btns">
       <router-link :to="`/user/${currentUser.uid}`">
@@ -81,18 +81,16 @@ header
   width 100%
   text-align center
   padding 10px
-  h1
-    width fit-content
-    margin 0 auto
-    font-size 1.4rem
+  img
+    width: 12rem
   .btns
     position absolute
     top 10px
     right 30px
-    cursor pointer
     img
       width 100%
     button
+      cursor pointer
       display: flex
       justify-content: center
       align-items: center
